@@ -2,18 +2,8 @@
 #define COLOR_H
 
 #include "vec3.h"
-#include <stdexcept>
 
-double clamp(double x)
-{
-    if (x<0) {
-        return 0.0;
-    }
-    if(x>255) {
-        return 255.0;
-    }
-    return x;
-}
+double clamp(double x);
 
 class Color: public vec3
 {
@@ -33,37 +23,10 @@ public:
     double b() const { return coordinates[2]; }
 
     // Arithmetic functions
-    Color& operator+=(const Color& color)
-    {
-        coordinates[0] = clamp(coordinates[0] + color.r());
-        coordinates[1] = clamp(coordinates[1] + color.g());
-        coordinates[2] = clamp(coordinates[2] + color.b());
-        return *this;
-    }
-
-    Color& operator-=(const Color& color)
-    {
-        coordinates[0] = clamp(coordinates[0] - color.r());
-        coordinates[1] = clamp(coordinates[1] - color.g());
-        coordinates[2] = clamp(coordinates[2] - color.b());
-        return *this;
-    }
-
-    Color& operator*=(double a)
-    {
-        coordinates[0] *= a;
-        coordinates[1] *= a;
-        coordinates[2] *= a;
-        return *this;
-    }
-
-    Color& operator/=(double a)
-    {
-        coordinates[0] /= a;
-        coordinates[1] /= a;
-        coordinates[2] /= a;
-        return *this;
-    }
+    Color &operator+=(const Color &color);
+    Color &operator-=(const Color &color);
+    Color &operator*=(double a);
+    Color &operator/=(double a);
 };
 
 using Pixel = Color;

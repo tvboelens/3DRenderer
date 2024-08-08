@@ -10,9 +10,9 @@ set( CMAKE_CXX_EXTENSIONS           OFF)
 
 set( SOURCE
     src/main.cc
-    src/canvas.h
-    src/color.h
-    src/vec3.h
+    src/canvas.cc
+    src/color.cc
+    src/vec3.cc
     )
 set( SOURCE_RASTERIZER
     "")
@@ -46,7 +46,6 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # Add executables
-add_executable(Renderer     ${SOURCE})
-add_executable(Raytracer    ${SOURCE_RAYTRACER})
-add_executable(Rasterizer   ${SOURCE_RASTERIZER})
+add_executable(Raytracer    ${SOURCE} ${SOURCE_RAYTRACER})
+add_executable(Rasterizer   ${SOURCE} ${SOURCE_RASTERIZER})
 
