@@ -1,17 +1,5 @@
 #include "canvas.h"
 
-Canvas::Canvas(int width, int height)
-    : m_width{width},
-      m_height{height}
-{
-    pixels.resize(width);
-    for (std::vector<std::vector<Pixel>>::iterator it = pixels.begin();
-         it < pixels.end(); ++it)
-    {
-        it->resize(height);
-    }
-}
-
 void Canvas::PutPixel(int x, int y, const Color& color)
 {
     /* We assume that x and y are given from a coordinate system with 0 in the center,

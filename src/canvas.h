@@ -10,7 +10,11 @@ class Canvas{
     int m_height;
     std::vector<std::vector<Pixel>> pixels;
     public:
-        Canvas(int width, int height);
+        Canvas(int width, int height)
+            : m_width{width}
+            , m_height{height}
+            , pixels(width, std::vector<Pixel>(height)) 
+            {};
 
         void PutPixel(int x, int y, const Color &color);
 };
