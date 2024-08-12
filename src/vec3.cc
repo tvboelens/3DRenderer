@@ -42,3 +42,16 @@ double vec3::length()
 {
     return std::sqrt(length_squared());
 }
+
+double vec3::operator*(const vec3& w) const
+{
+    double output{x() * w.x()};
+    output += y() * w.y();
+    output += z() * w.z();
+    return output;
+}
+
+double dot(const vec3 &v, const vec3 &w)
+{
+    return v * w;
+}

@@ -17,9 +17,12 @@ class vec3{
         vec3 &operator-=(const vec3 &v);
         vec3 &operator*=(double a);
         vec3 &operator/=(double a);
+        double operator*(const vec3 &w) const;
 
         double length_squared();
         double length();
 };
+
+double dot(const vec3 &v, const vec3 &w);
 
 #endif
