@@ -17,6 +17,7 @@ class Canvas{
             {};
 
         void PutPixel(int x, int y, const Color &color);
+        void render();
 };
 
 #endif

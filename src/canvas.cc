@@ -1,3 +1,4 @@
+#include <iostream>
 #include "canvas.h"
 
 void Canvas::PutPixel(int x, int y, const Color& color)
@@ -9,5 +10,30 @@ void Canvas::PutPixel(int x, int y, const Color& color)
     */
     x += (m_width - (m_width % 2)) / 2;
     y = (m_height - (m_height % 2)) / 2 - y;
+    // Don't do anything if (x,y) lies outside of the canvas
+    if(x<0||x>=m_width) 
+    {
+        return;
+    }
+    if(y<0||y>=m_height)
+    {
+        return;
+    }
     pixels[x][y] = color;
+}
+
+// Render to ppm format
+void Canvas::render()
+{
+
+    std::cout << "P3\n"
+              << m_width << ' ' << m_height << "\n255\n";
+    for (int j = 0; j < m_height; ++j)
+    {
+        for (int i = 0; i < m_width; ++i)
+        {
+            
+            std::cout << pixels[i][j].r() << ' ' << pixels[i][j].g() << ' ' << pixels[i][j].g() << "\n";
+        }
+    }
 }
