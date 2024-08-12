@@ -20,8 +20,8 @@ class vec3{
         vec3 &operator/=(double a);
         double operator*(const vec3 &w) const;
 
-        double length_squared();
-        double length();
+        double length_squared() const;
+        double length() const;
 };
 
 double dot(const vec3 &v, const vec3 &w);
