@@ -7,10 +7,11 @@
 class Sphere
 {
 private:
-    vec3 center{0.0, 0.0, 0.3};
+    vec3 center{0.0, 0.0, 0.0};
     double radius{1.0};
 public:
-    Sphere(const vec3& center_): center{center_} {};
+    Sphere() {};
+    Sphere(const vec3 &center_) : center{center_} {};
     Sphere(double radius_): radius{radius_} {};
     Sphere(const vec3 &center_, double radius_) : center{center_}, radius{radius_} {};
     Sphere(const Sphere& S) : center{S.center}, radius{S.radius} {};
