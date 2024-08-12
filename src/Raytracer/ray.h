@@ -7,14 +7,14 @@
 class Ray
 {
 private:
-    vec3 x{0.0, 0.0, 0.0};
-    vec3 y;
+    vec3 origin{0.0, 0.0, 0.0};
+    vec3 d;
 
 public:
-    Ray(const vec3& x_, const vec3& y_): x{x_}, y{y_} {};
-    Ray(const vec3 &y_): y{y_} {};
-    const vec3 &x() const { return x; };
-    const vec3 &y() const { return y; };
+    Ray(const vec3& x_, const vec3& y_): origin{x_}, d{y_} {};
+    Ray(const vec3 &y_): d{y_} {};
+    const vec3& x() const { return origin; };
+    const vec3& y() const { return d; };
 };
 
 
