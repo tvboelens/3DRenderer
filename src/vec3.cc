@@ -51,6 +51,32 @@ double vec3::operator*(const vec3& w) const
     return output;
 }
 
+vec3 operator+(const vec3 &x, const vec3 &y)
+{
+    vec3 output{x};
+    output += y;
+    return output;
+}
+
+vec3 operator-(const vec3 &x, const vec3 &y)
+{
+    vec3 output{x};
+    output += -1.0 * y;
+    return output;
+}
+vec3 operator*(const vec3 &x, double a)
+{
+    vec3 output{x};
+    output *= a;
+    return output;
+}
+vec3 operator*(double a, const vec3 &x)
+{
+    vec3 output{x};
+    output *= a;
+    return output;
+}
+
 double dot(const vec3 &v, const vec3 &w)
 {
     return v * w;
