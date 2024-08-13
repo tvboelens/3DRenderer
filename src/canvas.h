@@ -2,6 +2,7 @@
 #define CANVAS_H
 
 #include <vector>
+#include <string>
 #include "vec3.h"
 #include "color.h"
 
@@ -17,7 +18,7 @@ class Canvas{
             {};
 
         void PutPixel(int x, int y, const Color &color);
-        void render();
+        void render(std::string fname = "image.ppm");
 };
 
 #endif
