@@ -1,10 +1,11 @@
 #ifndef VEC3_H
 #define VEC3_H
+#include <array>
 
 
 class vec3{
     protected:
-        double coordinates[3];
+        std::array<double,3> coordinates;
     public:
         vec3() : coordinates{0.0, 0.0, 0.0} {};
         vec3(double x, double y, double z) : coordinates{x, y, z} {};
