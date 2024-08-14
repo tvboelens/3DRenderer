@@ -12,7 +12,7 @@ private:
     double radius;
     Color color;
 public:
-    Sphere() {};
+    //Sphere() {};
     Sphere(const vec3 &center_ = {0.0, 0.0, 0.0},
            double radius_ = {1.0}, 
            const Color& color_ = {0.0, 0.0, 0.0})
