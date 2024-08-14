@@ -11,7 +11,8 @@ class Scene
     public:
         void addSphere(const Sphere &S);
         std::vector<Sphere *>::const_iterator getSpheres() const;
-        Scene(const Color &C = {0.0, 0.0, 0.0}) : background_color{C} {};
+        const Color& getBackgroundColor() const { return background_color; };
+        Scene(const Color& C = {0.0, 0.0, 0.0}) : background_color{C} {};
         // Copy constructor
         Scene(const Scene &S) : spheres(S.spheres.size()), background_color{S.background_color}
             {
