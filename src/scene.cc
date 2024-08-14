@@ -6,10 +6,9 @@ void Scene::addSphere(const Sphere &S)
     spheres.push_back(ptr);
 }
 
-std::vector<Sphere *>::const_iterator Scene::getSpheres() const
+const std::vector<Sphere *>& Scene::getSpheres() const
 {
-    const std::vector<Sphere *>::const_iterator it{spheres.begin()};
-    return it;
+    return spheres;
 }
 
 Scene::~Scene()
