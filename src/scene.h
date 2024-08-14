@@ -8,7 +8,7 @@ class Scene
     std::vector<Sphere*> spheres;
     public:
         void addSphere(const Sphere &S);
-        const std::vector<Sphere *>::iterator getSpheres();
+        std::vector<Sphere *>::const_iterator getSpheres() const;
         // Copy constructor
         Scene(const Scene &S) : spheres(S.spheres.size()) 
             {
