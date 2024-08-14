@@ -2,6 +2,7 @@
 #define SPHERE_H
 
 #include "vec3.h"
+#include <array>
 #include "Raytracer/ray.h"
 #include "color.h"
 
@@ -20,7 +21,8 @@ public:
     Sphere(const Sphere &S) : center{S.center}, radius{S.radius} {};
     const vec3 &get_center() const { return center; };
     const double &get_radius() const { return radius; };
-    double IntersectRay(const Ray &ray);
+    const Color& getColor() const {return color;};
+    std::array<double,2> IntersectRay(const Ray &ray) const;
 };
 
 
