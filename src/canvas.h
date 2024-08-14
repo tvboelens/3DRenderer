@@ -16,7 +16,8 @@ class Canvas{
             , m_height{height}
             , pixels(width, std::vector<Pixel>(height)) 
             {};
-
+        const int &getWidth() const { return m_width; };
+        const int &getHeight() const { return m_height; };
         void PutPixel(int x, int y, const Color &color);
         void render(std::string fname = "image.ppm");
 };
