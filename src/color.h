@@ -2,6 +2,7 @@
 #define COLOR_H
 
 #include "vec3.h"
+#include <iostream>
 
 double clamp(double x);
 
@@ -9,14 +10,11 @@ class Color: public vec3
 {
 public:
     Color() { vec3(); };
-    Color(double r, double g, double b) 
-    {
-        vec3(clamp(r), clamp(g), clamp(b));
-    }
-    Color(vec3 v)
-    {
-        vec3(clamp(v.x()), clamp(v.y()), clamp(v.z()));
-    }
+    Color(double r, double g, double b) : vec3{clamp(r), clamp(g), clamp(b)} {};
+    Color(vec3 v) : vec3{clamp(v.x()),
+                         clamp(v.y()),
+                         clamp(v.z())} {};
+
     // Access functions
     double r() const { return coordinates[0]; }
     double g() const { return coordinates[1]; }
