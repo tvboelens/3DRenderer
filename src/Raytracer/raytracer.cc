@@ -1,4 +1,5 @@
 #include <array>
+#include <iostream>
 #include <limits>
 #include "raytracer.h"
 
@@ -36,19 +37,27 @@ Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, doub
     return color;
 }
 
-void RayTracer::PaintCanvas(Canvas canvas, const Scene &scene)
+void RayTracer::PaintCanvas(Canvas& canvas, const Scene &scene)
 {
-    Ray ray{camera_position,{0.0,0.0,viewport_distance}};
+    std::clog << "Starting painting...";
+    Ray ray{camera_position, {0.0, 0.0, viewport_distance}};
     for (int y = -(canvas.getHeight() - canvas.getHeight() % 2) / 2;
          y < (canvas.getHeight() + canvas.getHeight() % 2) / 2; ++y)
     {
+        std::clog << "\rPainting, lines remaining: "
+                  << ((canvas.getHeight() + canvas.getHeight() % 2) / 2 - y)
+                  << ' '
+                  << std::flush;
         for (int x = -(canvas.getWidth() - canvas.getWidth() % 2) / 2;
-             x < (canvas.getWidth() + canvas.getWidth() % 2) / 2; ++y)
+             x < (canvas.getWidth() + canvas.getWidth() % 2) / 2; ++x)
         {
+            //std::clog << "(x,y) = (" << x << ", " << y << ")\n";
             vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
             ray.Sety(viewport_coordinate);
             Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
+            //std::clog << "Color = (" << color.r() << "," << color.g() << "," << color.b() << ")\n";
             canvas.PutPixel(x, y, color);
         }
     }
+    std::clog << "\rDone painting.                 " << std::endl;
 }
