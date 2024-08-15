@@ -1,6 +1,6 @@
 #ifndef RAY_H
 #define RAY_H
-#include "vec3.h"
+#include "../vec3.h"
 
 
 // Class for a ray (in 3-dimensional real space) of the form x+ty, where t is the variable and x and y are fixed vectors
@@ -20,4 +20,4 @@ public:
     void Sety(const vec3 &y) { y_ = y; };
 };
 
-#endif RAY_H
+#endif
