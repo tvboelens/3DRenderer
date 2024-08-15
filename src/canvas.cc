@@ -10,7 +10,7 @@ void Canvas::PutPixel(int x, int y, const Color& color)
     and height to be odd, which needs to be accounted for in the transformation.
     */
     x += (m_width - (m_width % 2)) / 2;
-    y = (m_height - (m_height % 2)) / 2 - y;
+    y = (m_height - (m_height % 2)) / 2 - y-1;
     // Don't do anything if (x,y) lies outside of the canvas
     if(x<0||x>=m_width) 
     {
