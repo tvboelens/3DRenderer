@@ -9,15 +9,18 @@ set( CMAKE_CXX_EXTENSIONS           OFF)
 
 
 set( SOURCE
-    src/main.cc
     src/canvas.cc
     src/color.cc
+    src/scene.cc
+    src/sphere.cc
     src/vec3.cc
     )
 set( SOURCE_RASTERIZER
     "")
 set( SOURCE_RAYTRACER 
-    "")
+    src/Raytracer/raytracer.cc
+    src/Raytracer/main.cc
+)
 
 include_directories(src)
 
@@ -47,5 +50,5 @@ endif()
 
 # Add executables
 add_executable(Raytracer    ${SOURCE} ${SOURCE_RAYTRACER})
-add_executable(Rasterizer   ${SOURCE} ${SOURCE_RASTERIZER})
+#add_executable(Rasterizer   ${SOURCE} ${SOURCE_RASTERIZER})
 
