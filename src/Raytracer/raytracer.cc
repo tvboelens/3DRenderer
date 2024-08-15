@@ -51,11 +51,9 @@ void RayTracer::PaintCanvas(Canvas& canvas, const Scene &scene)
         for (int x = -(canvas.getWidth() - canvas.getWidth() % 2) / 2;
              x < (canvas.getWidth() + canvas.getWidth() % 2) / 2; ++x)
         {
-            //std::clog << "(x,y) = (" << x << ", " << y << ")\n";
             vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
             ray.Sety(viewport_coordinate);
             Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
-            //std::clog << "Color = (" << color.r() << "," << color.g() << "," << color.b() << ")\n";
             canvas.PutPixel(x, y, color);
         }
     }
