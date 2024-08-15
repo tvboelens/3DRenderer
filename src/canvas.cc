@@ -24,8 +24,9 @@ void Canvas::PutPixel(int x, int y, const Color& color)
 }
 
 // Render to ppm format
-void Canvas::render(std::string fname="image.ppm")
+void Canvas::render(std::string fname)
 {
+    std::clog << "Starting rendering...";
     std::ofstream img_file{fname};
     // If we couldn't open output file stream for writing output an error
     if(!img_file)
@@ -38,9 +39,11 @@ void Canvas::render(std::string fname="image.ppm")
              << m_width << ' ' << m_height << "\n255\n";
     for (int j = 0; j < m_height; ++j)
     {
+        std::clog << "\rRendering, scanlines remaining: " << (m_height - j) << ' ' << std::flush;
         for (int i = 0; i < m_width; ++i)
         {
             img_file << pixels[i][j].r() << ' ' << pixels[i][j].g() << ' ' << pixels[i][j].g() << "\n";
         }
     }
+    std::clog << "\rDone rendering.                 " << std::endl;
 }
