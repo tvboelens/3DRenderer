@@ -33,3 +33,10 @@
 
 # VS Code
 .vscode
+
+# Cmake build directories
+**/build
+**/out
+
+# Images
+*.ppm
