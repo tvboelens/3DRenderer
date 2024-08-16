@@ -3,31 +3,43 @@
 #include <vector>
 #include "sphere.h"
 #include "color.h"
+#include "Raytracer/light.h"
 
 class Scene
 {
     std::vector<Sphere*> spheres;
+    std::vector<Light *> lights;
     Color background_color;
-    public:
-        void addSphere(const Sphere &S);
-        const std::vector<Sphere *>& getSpheres() const;
-        const Color& getBackgroundColor() const { return background_color; };
-        Scene(const Color& C = {0.0, 0.0, 0.0}) : background_color{C} {};
-        // Copy constructor
-        Scene(const Scene &S) : spheres(S.spheres.size()), background_color{S.background_color}
+
+public:
+    void addSphere(const Sphere &S);
+    void addLight(const Light &light);
+    const std::vector<Sphere *> &getSpheres() const;
+    const std::vector<Light *>& getLights() const;
+    const Color &getBackgroundColor() const { return background_color; };
+    Scene(const Color &C = {0.0, 0.0, 0.0}) : background_color{C} {};
+    // Copy constructor
+    Scene(const Scene &S) 
+        : spheres(S.spheres.size())
+        , lights(S.lights.size())
+        , background_color{S.background_color}
+        {
+        // Deep copy
+        for (size_t i = 0; i < S.spheres.size(); ++i)
             {
-                // Deep copy
-                for (size_t i = 0; i < S.spheres.size();++i)
-                {
-                    spheres[i] = new Sphere;
-                    *spheres[i] = *S.spheres[i];
-                }
-            };
+                spheres[i] = new Sphere{*S.spheres[i]};
+            }
+            for (size_t i = 0; i < S.lights.size();++i)
+            {
+                lights[i] = new Light{*S.lights[i]};
+            }
+        };
         // Move constructor
         Scene(Scene &&S) noexcept
-            : spheres{S.spheres}, background_color{S.background_color}
+            : spheres{S.spheres}, lights{S.lights} ,background_color{S.background_color}
         {
             S.spheres.clear();
+            S.lights.clear();
         }
         // Move assignment operator
         Scene &operator=(Scene &&S) noexcept;
