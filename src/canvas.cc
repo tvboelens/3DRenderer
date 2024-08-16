@@ -42,7 +42,7 @@ void Canvas::render(std::string fname)
         std::clog << "\rRendering, scanlines remaining: " << (m_height - j) << ' ' << std::flush;
         for (int i = 0; i < m_width; ++i)
         {
-            img_file << pixels[i][j].r() << ' ' << pixels[i][j].g() << ' ' << pixels[i][j].b() << "\n";
+            img_file << int(pixels[i][j].r()) << ' ' << int(pixels[i][j].g()) << ' ' << int(pixels[i][j].b()) << "\n";
         }
     }
     std::clog << "\rDone rendering.                 " << std::endl;
