@@ -30,6 +30,12 @@ public:
         if(type==point){throw std::invalid_argument("Missing position!");;}
         if(type==directional){throw std::invalid_argument("Missing direction!");}
     } ;
+    Light(const Light& light)
+        : type_{light.type_}
+        , intensity_{light.intensity_}
+        , position_{light.position_}
+        , direction_{light.direction_}
+        {} ;
     const LightType &type() const { return type_; };
     const std::optional<vec3>& position() const { return position_; }
     const std::optional<vec3>& direction() const { return direction_; }
