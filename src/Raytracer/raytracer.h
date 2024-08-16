@@ -25,7 +25,8 @@ class RayTracer
                   , viewport_height{viewport_height_} {};
         vec3 CanvasToViewport(int x, int y, const Canvas &C);
         Color TraceRay(const Ray &ray, const Scene& scene, double t_min, double t_max);
-        void PaintCanvas(Canvas& C, const Scene &S);
+        double ComputeLighting(const Scene& scene, const vec3 &point, const vec3 &normal);
+        void PaintCanvas(Canvas &C, const Scene &S);
 };
 
 #endif
