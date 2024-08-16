@@ -9,7 +9,12 @@ vec3 RayTracer::CanvasToViewport(int x, int y, const Canvas& C)
     vec3 output(double(x) * viewport_width / double(C.getWidth()),
                 double(y) * double(viewport_height) / double(C.getHeight()),
                 viewport_distance);
-    // output = camera_rotation * output + camera_position;
+    // ad-hoc method of matrix multiplication
+    double a{dot(camera_rotation[0], output)};
+    double b{dot(camera_rotation[1], output)};
+    double c{dot(camera_rotation[2], output)};
+    output = {a, b, c};
+    output += camera_position;
     return output;
 }
 
