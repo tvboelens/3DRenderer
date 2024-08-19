@@ -18,7 +18,6 @@ public:
            double radius_ = 1.0, 
            const Color& color_ = {0.0, 0.0, 0.0})
         : center{center_}, radius{radius_}, color{color_} {};
-    Sphere(const Sphere &S) : center{S.center}, radius{S.radius}, color{S.color} {};
     const vec3 &get_center() const { return center; };
     const double &get_radius() const { return radius; };
     const Color& getColor() const {return color;};
