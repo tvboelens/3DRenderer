@@ -23,27 +23,29 @@ public:
         : spheres(S.spheres.size())
         , lights(S.lights.size())
         , background_color{S.background_color}
+    {
+    // Deep copy
+    for (size_t i = 0; i < S.spheres.size(); ++i)
         {
-        // Deep copy
-        for (size_t i = 0; i < S.spheres.size(); ++i)
-            {
-                spheres[i] = new Sphere{*S.spheres[i]};
-            }
-            for (size_t i = 0; i < S.lights.size();++i)
-            {
-                lights[i] = new Light{*S.lights[i]};
-            }
-        };
-        // Move constructor
-        Scene(Scene &&S) noexcept
-            : spheres{S.spheres}, lights{S.lights} ,background_color{S.background_color}
-        {
-            S.spheres.clear();
-            S.lights.clear();
+            spheres[i] = new Sphere{*S.spheres[i]};
         }
-        // Move assignment operator
-        Scene &operator=(Scene &&S) noexcept;
-        ~Scene();
+        for (size_t i = 0; i < S.lights.size();++i)
+        {
+            lights[i] = new Light{*S.lights[i]};
+        }
+    };
+    // Copy assignment operator
+    Scene& operator=(const Scene &S);
+    // Move constructor
+    Scene(Scene &&S) noexcept
+        : spheres{S.spheres}, lights{S.lights} ,background_color{S.background_color}
+    {
+        S.spheres.clear();
+        S.lights.clear();
+    }
+    // Move assignment operator
+    Scene &operator=(Scene &&S) noexcept;
+    ~Scene();
 };
 
 #endif
