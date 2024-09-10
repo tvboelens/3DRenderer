@@ -2,6 +2,9 @@ cmake_minimum_required( VERSION 3.30.2)
 
 project( 3DRenderer LANGUAGES CXX)
 
+find_package(Catch2 3 REQUIRED)
+
+
 # Set to C++17
 set( CMAKE_CXX_STANDARD             17)
 set( CMAKE_CXX_STANDARD_REQUIRED    ON)
@@ -20,6 +23,10 @@ set( SOURCE_RASTERIZER
 set( SOURCE_RAYTRACER 
     src/Raytracer/raytracer.cc
     src/Raytracer/main.cc
+)
+
+set( SOURCE_TESTS
+    tests/test_vec3.cc
 )
 
 include_directories(src)
@@ -51,4 +58,7 @@ endif()
 # Add executables
 add_executable(Raytracer    ${SOURCE} ${SOURCE_RAYTRACER})
 #add_executable(Rasterizer   ${SOURCE} ${SOURCE_RASTERIZER})
+add_executable(tests ${SOURCE} ${SOURCE_TESTS})
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+#target_link_libraries(tests PRIVATE Catch2::Catch2)
 
