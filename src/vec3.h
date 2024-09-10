@@ -1,6 +1,7 @@
 #ifndef VEC3_H
 #define VEC3_H
 #include <array>
+#include<iostream>
 
 
 class vec3{
@@ -20,9 +21,11 @@ class vec3{
         vec3 &operator*=(double a);
         vec3 &operator/=(double a);
         double operator*(const vec3 &w) const;
+        bool operator==(const vec3 &v) const;
 
         double length_squared() const;
         double length() const;
+        friend std::ostream& operator<<(std::ostream &out, const vec3& v);
 };
 
 double dot(const vec3 &v, const vec3 &w);
@@ -30,5 +33,4 @@ vec3 operator+(const vec3 &x, const vec3 &y);
 vec3 operator-(const vec3 &x, const vec3 &y);
 vec3 operator*(const vec3 &x, double a);
 vec3 operator*(double a, const vec3 &x);
-
 #endif

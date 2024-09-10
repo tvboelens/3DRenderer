@@ -77,7 +77,20 @@ vec3 operator*(double a, const vec3 &x)
     return output;
 }
 
+bool vec3::operator==(const vec3& v) const
+{
+    return (coordinates[0] == v.x() && coordinates[1] == v.y() && coordinates[2] == v.z());
+}
+
+
 double dot(const vec3 &v, const vec3 &w)
 {
     return v * w;
+}
+
+std::ostream& operator<<(std::ostream &out, const vec3& v)
+{
+    out << '(' << v.coordinates[0] << ',' << v.coordinates[1]
+        << ',' << v.coordinates[2] << ')';
+    return out;
 }
