@@ -5,8 +5,8 @@
 
 std::array<double,2> Sphere::IntersectRay(const Ray& ray) const
 {
-    vec3 z{ray.x() - center};
-    vec3 y{ray.y()};
+    vec3 z{ray.GetOrigin() - center};
+    vec3 y{ray.GetDirection()};
     double a{y.length_squared()};
     double b{2*dot(z, y)};
     double c{z.length_squared() - radius * radius};

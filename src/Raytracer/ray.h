@@ -7,17 +7,17 @@
 class Ray
 {
 private:
-    vec3 x_{0.0, 0.0, 0.0};
-    vec3 y_;
+    vec3 origin{0.0, 0.0, 0.0};
+    vec3 direction;
 
 public:
-    Ray(const vec3& x, const vec3& y): x_{x}, y_{y} {};
-    Ray(const vec3 &y): y_{y} {};
+    Ray(const vec3& x, const vec3& y): origin{x}, direction{y} {};
+    Ray(const vec3 &y): direction{y} {};
 
-    const vec3& x() const { return x_; };
-    const vec3& y() const { return y_; };
-    void Setx(const vec3 &x) { x_ = x; };
-    void Sety(const vec3 &y) { y_ = y; };
+    const vec3& GetOrigin() const { return origin; };
+    const vec3& GetDirection() const { return direction; };
+    void SetOrigin(const vec3 &x) { origin = x; };
+    void SetDirection(const vec3 &y) { direction = y; };
 };
 
 #endif
