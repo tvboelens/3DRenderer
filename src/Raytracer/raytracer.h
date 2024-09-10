@@ -31,6 +31,8 @@ class RayTracer
         Color TraceRay(const Ray &ray, const Scene& scene, double t_min, double t_max);
         double ComputeLighting(const Scene& scene, const vec3 &point, const vec3 &normal);
         void PaintCanvas(Canvas &C, const Scene &S);
+        void PaintCanvas_parallel(Canvas &canvas, const Scene &scene);
+        void PaintCanvasLines(Canvas &canvas, const Scene &scene, Ray& ray, int y_start, int y_end);
 };
 
 #endif

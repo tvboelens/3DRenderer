@@ -3,6 +3,7 @@
 #include <limits>
 #include <optional>
 #include "raytracer.h"
+#include <thread>
 
 vec3 RayTracer::CanvasToViewport(int x, int y, const Canvas& C)
 {
@@ -44,7 +45,7 @@ Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, doub
     // the normal at this point and use it to compute lighting and color
     if(closest_sphere.has_value())
     {
-        vec3 P{ray.x() + closest_t * ray.y()};
+        vec3 P{ray.GetOrigin() + closest_t * ray.GetDirection()};
         vec3 normal{P - closest_sphere.value().get_center()};
         normal /= normal.length();
         return closest_sphere.value().getColor() * ComputeLighting(scene, P, normal);
@@ -101,10 +102,50 @@ void RayTracer::PaintCanvas(Canvas& canvas, const Scene &scene)
              x < (canvas.getWidth() + canvas.getWidth() % 2) / 2; ++x)
         {
             vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
-            ray.Sety(viewport_coordinate);
+            ray.SetDirection(viewport_coordinate);
             Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
             canvas.PutPixel(x, y, color);
         }
     }
     std::clog << "\rDone painting.                 " << std::endl;
+}
+
+void RayTracer::PaintCanvas_parallel(Canvas &canvas, const Scene &scene)
+{
+    const unsigned int hardware_threads = std::thread::hardware_concurrency();
+    const unsigned int num_threads = (hardware_threads != 0 ? hardware_threads : 2);
+    std::clog << "Starting painting using " << num_threads << " threads..." << std::endl;
+    std::vector<std::thread> threads(num_threads - 1);
+    std::vector<Ray> rays(num_threads, {camera_position, {0.0,0.0, viewport_distance}});
+    int line_block_length = canvas.getHeight()/num_threads;
+    int y_start = -(canvas.getHeight() - canvas.getHeight() % 2) / 2;
+    int y_end = y_start;
+    for (unsigned int i = 0; i < num_threads-1;++i)
+    {
+        y_end += line_block_length;
+
+        threads[i] = std::thread(&RayTracer::PaintCanvasLines, this, std::ref(canvas), std::ref(scene), std::ref(rays[i]),
+                                 y_start, y_end);
+        y_start = y_end;
+    }
+    PaintCanvasLines(canvas, scene, rays.back(), y_end, (canvas.getHeight() + canvas.getHeight() % 2) / 2);
+    for (auto &entry : threads)
+        entry.join();
+    std::clog
+        << "\rDone painting.                 " << std::endl;
+}
+
+void RayTracer::PaintCanvasLines(Canvas &canvas, const Scene &scene, Ray& ray, int y_start, int y_end)
+{
+    for (int y = y_start;y < y_end; ++y)
+    {
+        for (int x = -(canvas.getWidth() - canvas.getWidth() % 2) / 2;
+             x < (canvas.getWidth() + canvas.getWidth() % 2) / 2; ++x)
+        {
+            vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
+            ray.SetDirection(viewport_coordinate);
+            Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
+            canvas.PutPixel(x, y, color);
+        }
+    }
 }
