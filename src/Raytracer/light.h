@@ -27,7 +27,7 @@ public:
     } ;
     Light(LightType type, double intensity): type_{type}, intensity_{intensity}
     {
-        if(type==point){throw std::invalid_argument("Missing position!");;}
+        if(type==point){throw std::invalid_argument("Missing position!");}
         if(type==directional){throw std::invalid_argument("Missing direction!");}
     } ;
     Light(const Light& light)
