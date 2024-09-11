@@ -27,6 +27,11 @@ public:
     Color &operator/=(double a);
 };
 
+Color operator+(const Color& x, const Color& y);
+Color operator-(const Color& x, const Color& y);
+Color operator*(const Color& x, double a);
+Color operator*(double a, const Color& x);
+
 using Pixel = Color;
 
 #endif
