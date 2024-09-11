@@ -27,6 +27,7 @@ set( SOURCE_RAYTRACER
 
 set( SOURCE_TESTS
     tests/test_vec3.cc
+    tests/test_color.cc
 )
 
 include_directories(src)
