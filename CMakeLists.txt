@@ -28,7 +28,7 @@ set( SOURCE_RAYTRACER
 set( SOURCE_TESTS
     tests/test_vec3.cc
     tests/test_color.cc
-#    tests/test_sphere.cc
+    tests/test_sphere.cc
 )
 
 # Enable testing for the project
