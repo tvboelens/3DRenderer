@@ -38,6 +38,9 @@
 **/build
 **/out
 
+# ppm images
+*.ppm
+
 # Cmake presets
 CMakePresets.json
 
