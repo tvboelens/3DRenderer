@@ -17,6 +17,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Install Dependencies
+        run: sudo apt update && sudo apt install -y cmake ninja-build
+      
       - name: Configure CMake
         run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
 
