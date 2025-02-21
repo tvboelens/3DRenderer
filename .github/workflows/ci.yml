@@ -23,9 +23,6 @@ jobs:
       - name: Upgrade Dependencies
         run: apt install -y --only-upgrade cmake ninja-build
       
-      - name: Configure CMake
-        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
-
       - name: Install Catch2 v3 from Source
         run: |
           git clone https://github.com/catchorg/Catch2.git
@@ -34,7 +31,12 @@ jobs:
           mkdir build && cd build
           cmake .. -DBUILD_TESTING=Off
           make -j $(nproc)
-          sudo make install
+          make install
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
+
+      
 
       - name: Build
         run: cmake --build build
