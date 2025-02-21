@@ -28,7 +28,11 @@ set( SOURCE_RAYTRACER
 set( SOURCE_TESTS
     tests/test_vec3.cc
     tests/test_color.cc
+#    tests/test_sphere.cc
 )
+
+# Enable testing for the project
+enable_testing()
 
 include_directories(src)
 
@@ -59,7 +63,11 @@ endif()
 # Add executables
 add_executable(Raytracer    ${SOURCE} ${SOURCE_RAYTRACER})
 #add_executable(Rasterizer   ${SOURCE} ${SOURCE_RASTERIZER})
-add_executable(tests ${SOURCE} ${SOURCE_TESTS})
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-#target_link_libraries(tests PRIVATE Catch2::Catch2)
+add_executable(unit_tests ${SOURCE} ${SOURCE_TESTS})
+target_link_libraries(unit_tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(unit_tests PRIVATE Catch2::Catch2)
+
+# Register tests with CMake so that CTest can discover them
+add_test(NAME unit_tests COMMAND unit_tests)
+
 
