@@ -9,8 +9,40 @@ on:
       - 'main'
 
 jobs:
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    container:
+      image: gcc:12.4.0-bookworm
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Run Tests
+        run: ctest --test-dir build
+
+      - name: Static Analysis with cppcheck (Linux/macOS only)
+        if: runner.os != 'Windows'
+        run: cppcheck --enable=all --inline-suppr --quiet --error-exitcode=1 .
+
+      - name: Memory Leak Check with Valgrind (Linux/macOS only)
+        if: runner.os != 'Windows'
+        run: valgrind --leak-check=full --error-exitcode=1 ./build/my_tests
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-linux
+          path: build/*.xml
+      
   build-and-test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
