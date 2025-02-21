@@ -7,7 +7,7 @@
 
 int main()
 {
-
+    // Scene with white as background color
     Scene scene{{255.0,255.0,255.0}};
     Canvas canvas{256, 256};
 
@@ -21,7 +21,7 @@ int main()
     scene.addLight(Light(point, 0.6, {2, 1, 0}));
     scene.addLight(Light(directional, 0.2, {1, 4, 4}));
 
-    raytracer.PaintCanvas(canvas, scene);
+    raytracer.PaintCanvas_parallel(canvas, scene);
     canvas.render();
 
     return 0;
