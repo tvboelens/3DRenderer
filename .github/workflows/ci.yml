@@ -34,7 +34,7 @@ jobs:
           make install
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -G Ninja
+        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra" -G Ninja
 
       
 
