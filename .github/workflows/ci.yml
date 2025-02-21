@@ -1,0 +1,57 @@
+name: C++ CI with CMake & Catch2
+
+on:
+  push:
+    branches: 
+      - 'main'
+  pull_request:
+    branches: 
+      - 'main'
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt update && sudo apt install -y cmake g++ ninja-build valgrind cppcheck
+
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install cmake ninja valgrind cppcheck
+
+      - name: Install Dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+          choco install ninja llvm
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Run Tests
+        run: ctest --test-dir build
+
+      - name: Static Analysis with cppcheck (Linux/macOS only)
+        if: runner.os != 'Windows'
+        run: cppcheck --enable=all --inline-suppr --quiet --error-exitcode=1 .
+
+      - name: Memory Leak Check with Valgrind (Linux/macOS only)
+        if: runner.os != 'Windows'
+        run: valgrind --leak-check=full --error-exitcode=1 ./build/my_tests
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: build/*.xml
