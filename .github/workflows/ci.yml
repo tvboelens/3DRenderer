@@ -88,7 +88,6 @@ jobs:
           git clone https://github.com/catchorg/Catch2.git
           cd Catch2
           git checkout "v3.4.0"
-          mkdir build && cd build
           cmake -B build -S . -DBUILD_TESTING=OFF
           cmake --build build/ --target install
 
