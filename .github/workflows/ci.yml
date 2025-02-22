@@ -75,7 +75,7 @@ jobs:
 
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install cmake ninja valgrind cppcheck
+        run: brew install ninja cppcheck
 
       - name: Install Dependencies (Windows)
         if: runner.os == 'Windows'
