@@ -83,6 +83,16 @@ jobs:
           choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
           choco install ninja llvm
 
+      - name: Install Catch2 v3 from Source
+        run: |
+          git clone https://github.com/catchorg/Catch2.git
+          cd Catch2
+          git checkout "v3.4.0"
+          mkdir build && cd build
+          cmake .. -DBUILD_TESTING=Off
+          make -j $(nproc)
+          make install
+
       - name: Configure CMake
         run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -GNinja
 
