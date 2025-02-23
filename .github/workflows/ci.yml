@@ -17,17 +17,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Check if CMake is installed
-        run: cmake --version
-        
-      - name: Install Dependencies
-        run: apt update && apt install -y cmake ninja-build cppcheck
+      - name: Install CMake from source
+        run: |
+          apt update && apt install -y wget build-essential libssl-dev
+          wget https://github.com/Kitware/CMake/releases/latest/download/cmake-linux-x86_64.sh
+          chmod +x cmake-linux-x86_64.sh
+          ./cmake-linux-x86_64.sh --skip-license --prefix=/usr/local
+          cmake --version
 
-      - name: Check where CMake is installed
-        run: which cmake
-      
-      - name: Upgrade Dependencies
-        run: apt install -y --only-upgrade cmake ninja-build
+
+      - name: Install Dependencies
+        run: apt install -y  ninja-build cppcheck
       
       - name: Install Catch2 v3 from Source
         run: |
