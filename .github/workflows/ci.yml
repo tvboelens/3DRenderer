@@ -20,7 +20,7 @@ jobs:
       - name: Install CMake from source
         run: |
           apt update && apt install -y wget build-essential libssl-dev
-          wget https://github.com/Kitware/CMake/releases/latest/download/cmake-linux-x86_64.sh
+          wget https://github.com/Kitware/CMake/releases/download/v3.31.5/cmake-3.31.5-linux-x86_64.sh
           chmod +x cmake-linux-x86_64.sh
           ./cmake-linux-x86_64.sh --skip-license --prefix=/usr/local
           cmake --version
