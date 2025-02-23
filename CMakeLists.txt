@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.25)
+cmake_minimum_required( VERSION 3.30.2)
 
 project( 3DRenderer LANGUAGES CXX)
 
