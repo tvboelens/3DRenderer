@@ -19,6 +19,9 @@ jobs:
 
       - name: Install Dependencies
         run: apt update && apt install -y cmake ninja-build cppcheck
+
+      - name: Check where CMake is installed
+        run: which cmake
       
       - name: Upgrade Dependencies
         run: apt install -y --only-upgrade cmake ninja-build
