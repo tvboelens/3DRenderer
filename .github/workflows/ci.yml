@@ -108,7 +108,7 @@ jobs:
 
       - name: Static Analysis with cppcheck (Linux/macOS only)
         if: runner.os != 'Windows'
-        run: cppcheck --enable=all --inline-suppr --quiet --error-exitcode=1 .
+        run: cppcheck --enable=all --inline-suppr --quiet --error-exitcode=1 -iCatch2 .
 
       - name: Memory Leak Check with Valgrind (Linux/macOS only)
         if: runner.os != 'Windows'
