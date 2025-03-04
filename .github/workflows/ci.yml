@@ -95,7 +95,7 @@ jobs:
           cd Catch2
           git checkout "v3.4.0"
           cmake -B build -S . -DBUILD_TESTING=OFF
-          cmake --build build/ --target install
+          sudo cmake --build build/ --target install
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra -Werror -fsanitize=address,undefined" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -GNinja
