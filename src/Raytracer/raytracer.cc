@@ -1,4 +1,5 @@
 #include <array>
+#include <cmath>
 #include <iostream>
 #include <limits>
 #include <optional>
@@ -47,15 +48,17 @@ Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, doub
     {
         vec3 P{ray.GetOrigin() + closest_t * ray.GetDirection()};
         vec3 normal{P - closest_sphere.value().get_center()};
+        vec3 D{ray.GetDirection()};
+        D *= -1.0;
         normal /= normal.length();
-        return closest_sphere.value().getColor() * ComputeLighting(scene, P, normal);
+        return closest_sphere.value().getColor() * ComputeLighting(scene, P, normal, D, closest_sphere.value().get_specular());
     }
     // If no sphere intersects the ray
     return scene.getBackgroundColor();
 }
 
 // Compute lighting at point P of a surface with normal vector normal at P
-double RayTracer::ComputeLighting(const Scene& scene, const vec3 &P, const vec3 &normal)
+double RayTracer::ComputeLighting(const Scene& scene, const vec3 &P, const vec3 &normal, const vec3& V, const double& s)
 {
     if (scene.getLights().size()==0) 
     {
@@ -78,11 +81,23 @@ double RayTracer::ComputeLighting(const Scene& scene, const vec3 &P, const vec3 
         {
             L = (*light)->direction().value();
         }
+
+        // diffuse reflection
         double N_dot_L = dot(normal, L);
         if(N_dot_L>0)
         {
             i += (*light)->intensity() * N_dot_L / (normal.length() * L.length());
-        }     
+        }    
+        
+        // specular reflection
+        if (s!=-1){
+            vec3 R;
+            R = 2 * normal * dot(normal, L) - L;
+            double r_dot_v = dot(R, V);
+            if (r_dot_v>0){
+                i += (*light)->intensity() * std::pow(r_dot_v / (R.length() * V.length()), s);
+            }
+        }
     }
     return i;
 }
