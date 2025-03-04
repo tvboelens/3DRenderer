@@ -27,7 +27,7 @@ jobs:
 
 
       - name: Install Dependencies
-        run: apt install -y  ninja-build cppcheck
+        run: apt install -y  ninja-build cppcheck valgrind
       
       - name: Install Catch2 v3 from Source
         run: |
@@ -40,12 +40,12 @@ jobs:
           make install
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: cmake -B build -DCMAKE_CXX_FLAGS="-Wall -Wextra" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -GNinja
 
       
 
       - name: Build
-        run: cmake --build build
+        run: ninja -C build
 
       - name: Run Tests
         run: ctest --test-dir build
@@ -81,7 +81,7 @@ jobs:
 
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install ninja cppcheck
+        run: brew install ninja cppcheck valgrind
 
       - name: Install Dependencies (Windows)
         if: runner.os == 'Windows'
