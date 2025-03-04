@@ -48,7 +48,7 @@ jobs:
         run: cmake --build build
 
       - name: Run Tests
-        run: ctest --test-dir .
+        run: ctest --test-dir build
 
       - name: Static Analysis with cppcheck (Linux/macOS only)
         if: runner.os != 'Windows'
