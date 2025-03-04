@@ -54,7 +54,7 @@ jobs:
         run: cppcheck --enable=style,performance,portability,information --quiet -iCatch2 .
 
       - name: Memory Leak Check with Valgrind 
-        run: valgrind --leak-check=full --verbose ./build/unit_tests
+        run: valgrind --leak-check=full --error-exitcode=1 --verbose ./build/unit_tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
@@ -110,7 +110,7 @@ jobs:
 
       - name: Memory Leak Check with Valgrind (Linux only)
         if: runner.os == 'Linux'
-        run: valgrind --leak-check=full --error-exitcode=1 --verbose ./build/unit_tests
+        run: valgrind --leak-check=full --verbose ./build/unit_tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
