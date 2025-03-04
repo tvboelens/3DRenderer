@@ -50,13 +50,11 @@ jobs:
       - name: Run Tests
         run: ctest --test-dir build
 
-      - name: Static Analysis with cppcheck (Linux/macOS only)
-        if: runner.os != 'Windows'
+      - name: Static Analysis with cppcheck 
         run: cppcheck --enable=style,performance,portability,information --quiet -iCatch2 .
 
-      - name: Memory Leak Check with Valgrind (Linux/macOS only)
-        if: runner.os != 'Windows'
-        run: valgrind --leak-check=full --error-exitcode=1 ./build/my_tests
+      - name: Memory Leak Check with Valgrind 
+        run: valgrind --leak-check=full --error-exitcode=1 ./build/unit_tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
@@ -81,7 +79,7 @@ jobs:
 
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install ninja cppcheck valgrind
+        run: brew install ninja cppcheck
 
       - name: Install Dependencies (Windows)
         if: runner.os == 'Windows'
@@ -110,9 +108,9 @@ jobs:
         if: runner.os != 'Windows'
         run: cppcheck --enable=style,performance,portability,information --quiet -iCatch2 .
 
-      - name: Memory Leak Check with Valgrind (Linux/macOS only)
-        if: runner.os != 'Windows'
-        run: valgrind --leak-check=full --error-exitcode=1 ./build/my_tests
+      - name: Memory Leak Check with Valgrind (Linux only)
+        if: runner.os == 'Linux'
+        run: valgrind --leak-check=full --error-exitcode=1 ./build/unit_tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
