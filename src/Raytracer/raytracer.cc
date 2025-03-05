@@ -22,7 +22,7 @@ vec3 RayTracer::CanvasToViewport(int x, int y, const Canvas& C)
 
 // Method to determine color of closest sphere that intersects a ray. 
 // If ray is given by x+ty, then take sphere such that t is in [t_min, t_max]
-Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, double t_max)
+Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, double t_max, int recursion_depth)
 {
 
     std::pair<std::optional<Sphere>, double> closest = ComputeClosestIntersection(scene, ray, t_min, t_max);
@@ -36,13 +36,25 @@ Color RayTracer::TraceRay(const Ray &ray, const Scene &scene, double t_min, doub
         return scene.getBackgroundColor();
     }
 
+    // compute local color
     vec3 D{ray.GetDirection()};
     vec3 P{ray.GetOrigin() + closest_t * D};
     vec3 normal{P - closest_sphere.value().get_center()};
     
     D *= -1.0;
     normal /= normal.length();
-    return closest_sphere.value().getColor() * ComputeLighting(scene, P, normal, D, closest_sphere.value().get_specular());
+    Color local_color = closest_sphere.value().getColor() * ComputeLighting(scene, P, normal, D, closest_sphere.value().get_specular());
+
+    // If we hit the recursion limit or the object is not reflective, we're done
+    double r = closest_sphere.value().get_reflective();
+    if (recursion_depth <= 0 or r <= 0){
+            return local_color;
+        }
+    // compute reflected color
+    Ray reflecting_ray {P, ReflectRay(D, normal)};
+    Color reflected_color = TraceRay(reflecting_ray, scene, 0.001, std::numeric_limits<double>::infinity(), recursion_depth-1);
+
+    return local_color * (1 - r) + reflected_color * r;
 }
 
 // Compute lighting at point P of a surface with normal vector normal at P
@@ -117,7 +129,7 @@ void RayTracer::PaintCanvas(Canvas& canvas, const Scene &scene)
         {
             vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
             ray.SetDirection(viewport_coordinate);
-            Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
+            Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity(),3);
             canvas.PutPixel(x, y, color);
         }
     }
@@ -158,7 +170,7 @@ void RayTracer::PaintCanvasLines(Canvas &canvas, const Scene &scene, Ray& ray, i
         {
             vec3 viewport_coordinate = CanvasToViewport(x, y, canvas);
             ray.SetDirection(viewport_coordinate);
-            Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity());
+            Color color = TraceRay(ray, scene, viewport_distance, std::numeric_limits<double>::infinity(),3);
             canvas.PutPixel(x, y, color);
         }
     }
@@ -185,4 +197,9 @@ std::pair<std::optional<Sphere>, double> RayTracer::ComputeClosestIntersection(c
         }
     }
     return std::pair<std::optional<Sphere>, double>{closest_sphere, closest_t};
+}
+
+vec3 RayTracer::ReflectRay(const vec3 &R, const vec3 &N)
+{
+    return 2 * N * dot(N, R) - R;
 }

@@ -8,14 +8,14 @@
 int main()
 {
     // Scene with white as background color
-    Scene scene{{255.0,255.0,255.0}};
+    Scene scene{{0.0,0.0,0.0}};
     Canvas canvas{256, 256};
 
     RayTracer raytracer;
-    scene.addSphere(Sphere{{0.0, -1.0, 3.0}, 1.0, {255.0, 0.0, 0.0}, 500}); // Red
-    scene.addSphere(Sphere{{2.0, 0.0, 4.0}, 1.0, {0.0, 0.0, 255.0}, 500}); // Blue
-    scene.addSphere(Sphere{{-2.0, 0.0, 4.0}, 1.0, {0.0, 255.0, 0.0},10}); // Green
-    scene.addSphere(Sphere({0.0,-5001.0,0.0}, 5000.0, {255.0,255.0,0.0}, 1000));//Yellow
+    scene.addSphere(Sphere{{0.0, -1.0, 3.0}, 1.0, {255.0, 0.0, 0.0}, 500, 0.2}); // Red
+    scene.addSphere(Sphere{{2.0, 0.0, 4.0}, 1.0, {0.0, 0.0, 255.0}, 500, 0.3}); // Blue
+    scene.addSphere(Sphere{{-2.0, 0.0, 4.0}, 1.0, {0.0, 255.0, 0.0},10, 0.4}); // Green
+    scene.addSphere(Sphere({0.0,-5001.0,0.0}, 5000.0, {255.0,255.0,0.0}, 1000, 0.5));//Yellow
 
     scene.addLight(Light(ambient, 0.2));
     scene.addLight(Light(point, 0.6, {2, 1, 0}));

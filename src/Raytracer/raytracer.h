@@ -28,12 +28,13 @@ class RayTracer
             , viewport_width{viewport_width_}
             , viewport_height{viewport_height_} {};
         vec3 CanvasToViewport(int x, int y, const Canvas &C);
-        Color TraceRay(const Ray &ray, const Scene& scene, double t_min, double t_max);
+        Color TraceRay(const Ray &ray, const Scene& scene, double t_min, double t_max, int recursion_depth);
         double ComputeLighting(const Scene &scene, const vec3 &point, const vec3 &normal, const vec3 &V, const double &s);
         void PaintCanvas(Canvas &C, const Scene &S);
         void PaintCanvas_parallel(Canvas &canvas, const Scene &scene);
         void PaintCanvasLines(Canvas &canvas, const Scene &scene, Ray& ray, int y_start, int y_end);
         std::pair<std::optional<Sphere>, double> ComputeClosestIntersection(const Scene &scene, const Ray &ray, double t_min, double t_max);
+        vec3 ReflectRay(const vec3 &R, const vec3 &N);
 };
 
 #endif
