@@ -33,6 +33,7 @@ class RayTracer
         void PaintCanvas(Canvas &C, const Scene &S);
         void PaintCanvas_parallel(Canvas &canvas, const Scene &scene);
         void PaintCanvasLines(Canvas &canvas, const Scene &scene, Ray& ray, int y_start, int y_end);
+        std::pair<std::optional<Sphere>, double> ComputeClosestIntersection(const Scene &scene, const Ray &ray, double t_min, double t_max);
 };
 
 #endif
