@@ -7,7 +7,7 @@
 
 int main()
 {
-    // Scene with white as background color
+    // Scene with black as background color
     Scene scene{{0.0,0.0,0.0}};
     Canvas canvas{256, 256};
 
